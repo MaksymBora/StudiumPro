@@ -11,7 +11,7 @@ export default defineConfig({
       pages: "/src/pages",
     },
   },
-  base: "./",
+  base: "StudiumPro",
   build: {
     outDir: "./dist",
     commonjsOptions: {

@@ -1,12 +1,12 @@
 {
   "name": "loptop",
-  "homepage": "",
+  "homepage": "https://maksymbora.github.io/StudiumPro/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --base=/StudiumPro/",
     "lint": "eslint .",
     "preview": "vite preview"
   },

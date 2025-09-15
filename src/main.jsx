@@ -9,7 +9,7 @@ import { App } from "./App.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <BrowserRouter basename="/">
+      <BrowserRouter basename="/StudiumPro">
         <GlobalStyles />
         <App />
       </BrowserRouter>
