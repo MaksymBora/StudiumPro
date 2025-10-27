@@ -205,19 +205,35 @@ export const GlobalStyles = createGlobalStyle`
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     color: ${theme.color.primaryBlack};
-    background-color: ${theme.color.primaryWhite};
+    background-color: ${theme.color.bodyBg};
   }
 
   /* ========================= /Common styles ========================= */
 
-.text-primary {
-  color: #f28b00 !important;
-}
-.fa,
-.fas,
-.fab {
-  font-weight: 900 !important;
-}
+  .text-primary {
+    color: ${theme.color.primaryColor} !important;
+  }
+
+  .text-secondary {
+    color: #f92400 !important;
+  }
+
+  @media (min-width: 1200px) {
+      h4, .h4 {
+          font-size: 1.5rem;
+      }
+  }
+
+  .fa,
+  .fas,
+  .fab {
+    font-weight: 900 !important;
+  }
+
+  .btn-primary {
+    background-color: #F28B00;
+    border-color: #F28B00;
+  }
 
   /* ========================= /Scroll styles ========================= */
 
