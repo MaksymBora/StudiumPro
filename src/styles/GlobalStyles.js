@@ -1,11 +1,11 @@
-import "modern-normalize";
-import { createGlobalStyle } from "styled-components";
-import { theme } from "./theme";
+import 'modern-normalize';
+import { createGlobalStyle } from 'styled-components';
+import { theme } from './theme';
 
-import PoppinsBold from "../assets/fonts/Poppins-Bold.ttf";
-import PoppinsMedium from "../assets/fonts/Poppins-Medium.ttf";
-import PoppinsRegular from "../assets/fonts/Poppins-Regular.ttf";
-import PoppinsSemiBold from "../assets/fonts/Poppins-SemiBold.ttf";
+import PoppinsBold from '../assets/fonts/Poppins-Bold.ttf';
+import PoppinsMedium from '../assets/fonts/Poppins-Medium.ttf';
+import PoppinsRegular from '../assets/fonts/Poppins-Regular.ttf';
+import PoppinsSemiBold from '../assets/fonts/Poppins-SemiBold.ttf';
 
 export const GlobalStyles = createGlobalStyle`
 
@@ -207,7 +207,17 @@ export const GlobalStyles = createGlobalStyle`
     color: ${theme.color.primaryBlack};
     background-color: ${theme.color.primaryWhite};
   }
+
   /* ========================= /Common styles ========================= */
+
+.text-primary {
+  color: #f28b00 !important;
+}
+.fa,
+.fas,
+.fab {
+  font-weight: 900 !important;
+}
 
   /* ========================= /Scroll styles ========================= */
 
