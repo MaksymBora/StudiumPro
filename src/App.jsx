@@ -12,10 +12,9 @@ export function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="/" element={<Home />}>
-          <Route path="contacts" element={<Contact />} />
-          <Route path="shop" element={<Shop />} />
-        </Route>
+        <Route index element={<Home />}></Route>
+        <Route path="contacts" element={<Contact />} />
+        <Route path="shop" element={<Shop />} />
       </Route>
     </Routes>
   );
