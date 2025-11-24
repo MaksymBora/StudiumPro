@@ -1,7 +1,8 @@
-import { useState } from 'react';
-
-export function Price() {
-  const [price, setPrice] = useState(0);
+export function Price({ value, onChange }) {
+  const handleChange = e => {
+    const newValue = Number(e.target.value);
+    onChange?.(newValue);
+  };
 
   return (
     <div className="price mb-4">
@@ -10,11 +11,11 @@ export function Price() {
         type="range"
         className="form-range w-100 red-300"
         min="0"
-        max="500"
-        value={price}
-        onChange={e => setPrice(Number(e.target.value))}
+        max="5000"
+        value={value}
+        onChange={handleChange}
       />
-      <output className="fw-semibold">{price}</output>
+      <output className="fw-semibold">{value}</output>
     </div>
   );
 }

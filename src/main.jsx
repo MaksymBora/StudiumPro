@@ -7,13 +7,20 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyles, theme } from './styles';
 import './index.css';
 import { App } from './App.jsx';
+import { persistor, store } from './Redux/Store.js';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <BrowserRouter basename="/StudiumPro">
-        <GlobalStyles />
-        <App />
+        <Provider store={store}>
+          <GlobalStyles />
+          {/* <PersistGate loading={null} persistor={persistor}> */}
+          <App />
+          {/* </PersistGate> */}
+        </Provider>
       </BrowserRouter>
     </ThemeProvider>
   </StrictMode>
