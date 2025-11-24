@@ -1,13 +1,45 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getAllProducts, getFilteredProducts } from '../../../Redux/Products/operations';
+
 export function NavPan() {
+  const dispatch = useDispatch();
+  const [search, setSearch] = useState('');
+
+  const handleChange = e => {
+    setSearch(e.target.value);
+  };
+
+  const handleSearch = e => {
+    e.preventDefault();
+
+    const term = search.trim();
+    if (!term) {
+      dispatch(getAllProducts());
+      return;
+    }
+
+    dispatch(getFilteredProducts({ brand: term }));
+  };
+
   return (
-    <div className="row g-4">
+    <div className="row g-4 mb-3">
       {/* Search field */}
       <div className="col-xl-7">
         <div className="input-group w-100 mx-auto d-flex">
-          <input type="search" className="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1" />
-          <span id="search-icon-1" className="input-group-text p-3">
-            <i className="fa fa-search"></i>
-          </span>
+          <form className="input-group w-100 mx-auto d-flex" onSubmit={handleSearch}>
+            <input
+              type="search"
+              className="form-control p-3"
+              placeholder="Brand (e.g. Dell, Asus)"
+              aria-describedby="search-icon-1"
+              value={search}
+              onChange={handleChange}
+            />
+            <button id="search-icon-1" className="input-group-text p-3" type="submit" aria-label="Search by brand">
+              <i className="fa fa-search"></i>
+            </button>
+          </form>
         </div>
       </div>
 
@@ -24,10 +56,6 @@ export function NavPan() {
             defaultValue="volvo"
           >
             <option value="volvo">Default Sorting</option>
-            <option value="volv">Nothing</option>
-            <option value="sab">Popularity</option>
-            <option value="saab">Newness</option>
-            <option value="opel">Average Rating</option>
             <option value="audio">Low to high</option>
             <option value="audi">High to low</option>
           </select>
