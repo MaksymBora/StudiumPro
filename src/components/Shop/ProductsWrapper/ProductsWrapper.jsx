@@ -2,11 +2,10 @@ import { Content } from '../MainContent/Content';
 import { MainBanner } from '../MainContent/MainBanner';
 import { NavPan } from '../MainContent/NavPan';
 import { Sidebar } from '../Sidebar/Sidebar';
-import { TopSaleBanners } from '../TopSaleBanners';
 
 export function ProductsWrapper() {
   return (
-    <div>
+    <>
       <div className="container-fluid shop py-5 bg-white">
         <div className="container py-5">
           <div className="row g-4">
@@ -19,7 +18,6 @@ export function ProductsWrapper() {
           </div>
         </div>
       </div>
-      <TopSaleBanners></TopSaleBanners>
-    </div>
+    </>
   );
 }
