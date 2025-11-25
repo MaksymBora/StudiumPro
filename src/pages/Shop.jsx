@@ -1,13 +1,15 @@
 import { Advantages } from '../components/Shop/Advantages.jsx';
 import { ProductOffer } from '../components/Shop/ProductOffer.jsx';
 import { ProductsWrapper } from '../components/Shop/ProductsWrapper/ProductsWrapper.jsx';
+import { TopSaleBanners } from '../components/Shop/TopSaleBanners.jsx';
 
 export function Shop() {
   return (
-    <div>
-      <Advantages></Advantages>
-      <ProductOffer></ProductOffer>
-      <ProductsWrapper></ProductsWrapper>
-    </div>
+    <>
+      <Advantages />
+      <ProductOffer />
+      <ProductsWrapper />
+      <TopSaleBanners />
+    </>
   );
 }

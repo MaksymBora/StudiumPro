@@ -1,12 +1,15 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Carousel } from '../components/Home/Carousel';
+import { Advantages } from '../components/Shop/Advantages';
+import { ProductOffer } from '../components/Shop/ProductOffer';
+import { TopSaleBanners } from '../components/Shop/TopSaleBanners';
 
 export function Home() {
   return (
-    <div>
-      <Link to="/">Home</Link>
-      <Link to="contacts">Contacts</Link>
-      <Link to="shop">Shop</Link>
-      <Outlet />
-    </div>
+    <>
+      <Carousel />
+      <Advantages />
+      <ProductOffer />
+      <TopSaleBanners />
+    </>
   );
 }
