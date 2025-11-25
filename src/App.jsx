@@ -7,12 +7,16 @@ import { Shop } from './pages/Shop.jsx';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { Layout } from './components/Global/Layout.jsx';
+import { Login } from './pages/Login.jsx';
+import { SignIn } from './pages/SignIn.jsx';
 
 export function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />}></Route>
+        <Route path="login" element={<Login />} />
+        <Route path="signin" element={<SignIn />} />
         <Route path="contacts" element={<Contact />} />
         <Route path="shop" element={<Shop />} />
       </Route>
