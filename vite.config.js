@@ -10,12 +10,12 @@ export default defineConfig({
       pages: '/src/pages',
     },
   },
-  // base: '/StudiumPro',
+  base: '/StudiumPro',
   build: {
     sourcemap: true,
-    // outDir: './dist',
-    // commonjsOptions: {
-    //   transformMixedEsModules: true,
-    // },
+    outDir: './dist',
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
   },
 });
