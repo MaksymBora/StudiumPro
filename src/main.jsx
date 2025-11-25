@@ -14,7 +14,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <BrowserRouter basename="/StudiumPro">
+      <BrowserRouter basename="/StudiumPro/">
         <Provider store={store}>
           <GlobalStyles />
           {/* <PersistGate loading={null} persistor={persistor}> */}
