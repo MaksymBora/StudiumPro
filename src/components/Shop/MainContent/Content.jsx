@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Pagination } from './Pagination';
 import { ProductCard } from '../ProductCard';
 import prod1 from '../../../assets/img/product-3.png';
@@ -31,20 +31,24 @@ export function Content() {
     <div className="tab-content">
       <div id="tab-5" className="tab-pane fade show p-0 active">
         <div className="row g-4 product">
-          {products.map(p => (
-            <ProductCard
-              key={p.productId}
-              img={prod1}
-              title={p.name}
-              subtitle={`${p.brand} • ${p.screenSize}"`}
-              price={p.price}
-              oldPrice={Math.round(p.price * 1.2)}
-              rating={4}
-              to={`/product/${p.productId}`}
-              onAddToCart={() => console.log('Add to cart:', p.name)}
-              onWishlist={() => console.log('Wishlist:', p.name)}
-            />
-          ))}
+          {products.map(p => {
+            const ratingValue = p.averageRating != null ? Math.round(Number(p.averageRating)) : 0;
+
+            return (
+              <ProductCard
+                key={p.productId}
+                img={prod1}
+                title={p.name}
+                subtitle={`${p.brand} • ${p.screenSize}"`}
+                price={p.price}
+                oldPrice={Math.round(p.price * 1.2)}
+                rating={ratingValue}
+                to={`/product/${p.productId}`}
+                onAddToCart={() => console.log('Add to cart:', p.name)}
+                onWishlist={() => console.log('Wishlist:', p.name)}
+              />
+            );
+          })}
 
           <Pagination total={5} onChange={page => console.log('current page:', page)} />
         </div>

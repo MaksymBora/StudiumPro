@@ -7,10 +7,14 @@ import { AdditionalProds } from '../AdditionalProds';
 import { FeaturedProds } from '../FeaturedProds';
 import { Banner } from '../Banner';
 import { getAllProducts, getFilteredProducts } from '../../../../Redux/Products/operations';
+import { useLocation } from 'react-router';
 
 export function Categories() {
   const dispatch = useDispatch();
   const [maxPrice, setMaxPrice] = useState(0);
+
+  const location = useLocation();
+  const isShopPage = location.pathname === '/shop' || location.pathname === '/shop/';
 
   const brands = [
     { label: 'All laptops', brand: null, count: 12 },
@@ -67,7 +71,7 @@ export function Categories() {
       </div>
 
       {/* Price */}
-      <Price value={maxPrice} onChange={handlePriceChange} />
+      {isShopPage && <Price value={maxPrice} onChange={handlePriceChange} />}
 
       {/* Additional products (radio) */}
       <AdditionalProds />

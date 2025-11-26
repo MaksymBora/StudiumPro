@@ -27,3 +27,13 @@ export const getFilteredProducts = createAsyncThunk('products/getFiltered', asyn
     return thunkAPI.rejectWithValue(error.message);
   }
 });
+
+export const getProductRating = createAsyncThunk('products/getRating', async (productId, thunkAPI) => {
+  try {
+    const response = await axios.get(`/api/Products/${productId}/rating`);
+
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message || 'Failed to load rating');
+  }
+});

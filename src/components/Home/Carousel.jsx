@@ -6,7 +6,6 @@ export function Carousel() {
   return (
     <div className="container-fluid carousel bg-light px-0">
       <div className="row g-0 justify-content-end">
-        {/* Левая часть — один статичный «слайд» */}
         <div className="col-12 col-lg-7 col-xl-9">
           <div className="bg-light py-5">
             <div className="row g-0 header-carousel-item align-items-center">
@@ -27,7 +26,6 @@ export function Carousel() {
           </div>
         </div>
 
-        {/* Правая часть — баннер как в шаблоне */}
         <div className="col-12 col-lg-5 col-xl-3">
           <div className="carousel-header-banner h-100">
             <img src={headerImg} className="img-fluid w-100 h-100" style={{ objectFit: 'cover' }} alt="Special Offer" />
