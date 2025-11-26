@@ -1,19 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { allProductsReducer } from './Products/productsSlice';
 
-const persistConfig = {
+import { allProductsReducer } from './Products/productsSlice';
+import { authReducer } from './Auth/authSlice';
+
+const authPersistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['token'], // если потом добавишь userAuth
+  whitelist: ['token', 'tokenType', 'isAuthenticated'],
 };
 
-// примечание: сейчас persist ни к чему не привязан — оставляем как задел
 export const store = configureStore({
   reducer: {
+    auth: persistReducer(authPersistConfig, authReducer),
     products: allProductsReducer,
-    // userAuth: persistReducer(persistConfig, userAuthReducer),
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

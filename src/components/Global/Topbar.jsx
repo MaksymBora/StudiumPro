@@ -1,23 +1,46 @@
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectIsAuthenticated } from '../../Redux/Auth/selector';
+import { logout } from '../../Redux/Auth/authSlice';
 
 export function TopBar() {
+  const isAuth = useSelector(selectIsAuthenticated);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <div className="container-fluid px-5 d-none d-lg-block border-bottom">
       <div className="row gx-0 align-items-center">
         {/* Left links */}
         <div className="col-lg-4 text-center text-lg-start mb-lg-0">
           <div className="d-inline-flex align-items-center" style={{ height: '45px' }}>
-            <Link to="/help" className="text-muted me-2">
-              Help
-            </Link>
-            <small>/</small>
-            <Link to="/support" className="text-muted mx-2">
-              Support
-            </Link>
-            <small>/</small>
-            <Link to="/contact" className="text-muted ms-2">
-              Contact
-            </Link>
+            {!isAuth && (
+              <>
+                <Link to="/" className="text-muted me-2">
+                  Help
+                </Link>
+                <small>/</small>
+
+                <Link to="/" className="text-muted mx-2">
+                  Support
+                </Link>
+                <small>/</small>
+
+                <Link to="/contact" className="text-muted ms-2">
+                  Contact
+                </Link>
+              </>
+            )}
+
+            {isAuth && (
+              <Link to="/account" className="text-muted fw-semibold">
+                <i className="fa fa-user me-2"></i>
+                My Account
+              </Link>
+            )}
           </div>
         </div>
 
@@ -34,7 +57,7 @@ export function TopBar() {
           <div className="d-inline-flex align-items-center" style={{ height: '45px' }}>
             {/* Currency */}
             <div className="dropdown me-2">
-              <a href="#" className="dropdown-toggle text-muted" data-bs-toggle="dropdown" role="button">
+              <a href="#" className="dropdown-toggle text-muted" data-bs-toggle="dropdown">
                 <small>USD</small>
               </a>
               <div className="dropdown-menu rounded">
@@ -46,7 +69,7 @@ export function TopBar() {
 
             {/* Language */}
             <div className="dropdown mx-2">
-              <a href="#" className="dropdown-toggle text-muted" data-bs-toggle="dropdown" role="button">
+              <a href="#" className="dropdown-toggle text-muted" data-bs-toggle="dropdown">
                 <small>English</small>
               </a>
               <div className="dropdown-menu rounded">
@@ -67,28 +90,37 @@ export function TopBar() {
 
             {/* Dashboard */}
             <div className="dropdown ms-2">
-              <a href="#" className="dropdown-toggle text-muted" data-bs-toggle="dropdown" role="button">
+              <a href="#" className="dropdown-toggle text-muted" data-bs-toggle="dropdown">
                 <small>
-                  <i className="fa fa-home me-2" />
-                  My Dashboard
+                  <i className="fa fa-home me-2" /> My Dashboard
                 </small>
               </a>
 
               <div className="dropdown-menu rounded">
-                <Link to="/login" className="dropdown-item">
-                  Login
-                </Link>
-                <Link to="/signin" className="dropdown-item">
-                  SignIn
-                </Link>
+                {!isAuth && (
+                  <>
+                    <Link to="/login" className="dropdown-item">
+                      Login
+                    </Link>
+                    <Link to="/signin" className="dropdown-item">
+                      SignIn
+                    </Link>
+                  </>
+                )}
+
+                {isAuth && (
+                  <>
+                    <Link to="/account" className="dropdown-item">
+                      My Account
+                    </Link>
+                    <button className="dropdown-item text-danger" onClick={handleLogout} style={{ cursor: 'pointer' }}>
+                      Log Out
+                    </button>
+                  </>
+                )}
+
                 <Link to="/" className="dropdown-item">
                   Wishlist
-                </Link>
-                <Link to="/account" className="dropdown-item">
-                  My Account
-                </Link>
-                <Link to="/logout" className="dropdown-item">
-                  Log Out
                 </Link>
               </div>
             </div>
