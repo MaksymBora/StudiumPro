@@ -1,9 +1,14 @@
-// src/pages/Registration.jsx
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Advantages } from '../components/Shop/Advantages';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../Redux/Auth/operations';
+import { useNavigate } from 'react-router-dom';
 
 export function SignIn() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const initialValues = {
     username: '',
     email: '',
@@ -29,7 +34,15 @@ export function SignIn() {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={values => console.log(values)}
+            onSubmit={async (values, actions) => {
+              const result = await dispatch(registerUser(values));
+
+              if (registerUser.fulfilled.match(result)) {
+                navigate('/');
+              }
+
+              actions.setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="p-4 mb-5 border rounded bg-light shadow-sm">
