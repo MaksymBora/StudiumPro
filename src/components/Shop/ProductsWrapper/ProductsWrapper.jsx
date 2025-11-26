@@ -9,11 +9,11 @@ export function ProductsWrapper() {
       <div className="container-fluid shop py-5 bg-white">
         <div className="container py-5">
           <div className="row g-4">
-            <Sidebar></Sidebar>
+            <Sidebar />
             <div className="col-lg-9 wow fadeInUp" data-wow-delay="0.1s">
-              <MainBanner></MainBanner>
-              <NavPan></NavPan>
-              <Content></Content>
+              <MainBanner />
+              <NavPan />
+              <Content />
             </div>
           </div>
         </div>

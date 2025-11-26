@@ -9,6 +9,7 @@ import './App.css';
 import { Layout } from './components/Global/Layout.jsx';
 import { Login } from './pages/Login.jsx';
 import { SignIn } from './pages/SignIn.jsx';
+import { Product } from './pages/Product.jsx';
 
 export function App() {
   return (
@@ -19,6 +20,7 @@ export function App() {
         <Route path="signin" element={<SignIn />} />
         <Route path="contacts" element={<Contact />} />
         <Route path="shop" element={<Shop />} />
+        <Route path="product/:id" element={<Product />} />
       </Route>
     </Routes>
   );

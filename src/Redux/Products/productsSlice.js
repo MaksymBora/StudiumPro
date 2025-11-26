@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllProducts, getFilteredProducts } from './operations';
+import { getAllProducts, getFilteredProducts, getProductRating } from './operations';
 
 const initialState = {
   items: [],
   loading: false,
   error: null,
+  ratingById: {},
 };
 
 const productsSlice = createSlice({
@@ -38,6 +39,32 @@ const productsSlice = createSlice({
       .addCase(getFilteredProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || action.error?.message;
+      });
+
+    builder
+      .addCase(getProductRating.pending, (state, action) => {
+        const productId = action.meta.arg;
+        state.ratingById[productId] = {
+          ...(state.ratingById[productId] || {}),
+          loading: true,
+          error: null,
+        };
+      })
+      .addCase(getProductRating.fulfilled, (state, action) => {
+        const { productId, averageRating } = action.payload;
+        state.ratingById[productId] = {
+          value: averageRating,
+          loading: false,
+          error: null,
+        };
+      })
+      .addCase(getProductRating.rejected, (state, action) => {
+        const productId = action.meta.arg;
+        state.ratingById[productId] = {
+          ...(state.ratingById[productId] || {}),
+          loading: false,
+          error: action.payload || action.error.message,
+        };
       });
   },
 });
