@@ -11,7 +11,10 @@ export function ReviewForm() {
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
   const [selectedRating, setSelectedRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState('');
+
+  const currentRating = hoverRating || selectedRating;
 
   const handleStarClick = value => {
     if (!isAuthenticated) {
@@ -30,7 +33,12 @@ export function ReviewForm() {
     }
 
     if (!selectedRating) {
-      alert('Please give a rating from 1 to 5.');
+      alert('Please select a rating from 1 to 5.');
+      return;
+    }
+
+    if (!comment.trim()) {
+      alert('Please write a review comment.');
       return;
     }
 
@@ -43,8 +51,9 @@ export function ReviewForm() {
     )
       .unwrap()
       .then(() => {
-        alert('Thank you! The rating has been saved.');
+        alert('Thank you! Your rating and comment have been saved.');
         setSelectedRating(0);
+        setHoverRating(0);
         setComment('');
       })
       .catch(errorMessage => {
@@ -62,11 +71,11 @@ export function ReviewForm() {
           {[1, 2, 3, 4, 5].map(value => (
             <i
               key={value}
-              className={`fa fa-star ${value <= selectedRating ? 'text-warning' : 'text-muted'}`}
+              className={`fa fa-star ${value <= currentRating ? 'text-warning' : 'text-muted'}`}
               style={{ cursor: 'pointer', marginRight: 4 }}
               onClick={() => handleStarClick(value)}
-              onMouseEnter={() => isAuthenticated && setSelectedRating(value)}
-              onMouseLeave={() => {}}
+              onMouseEnter={() => isAuthenticated && setHoverRating(value)}
+              onMouseLeave={() => setHoverRating(0)}
             />
           ))}
         </div>
@@ -85,7 +94,7 @@ export function ReviewForm() {
               className="form-control border-0"
               cols="30"
               rows="5"
-              placeholder="Your Review (optional)"
+              placeholder="Your Review *"
               spellCheck="false"
               value={comment}
               onChange={e => setComment(e.target.value)}
