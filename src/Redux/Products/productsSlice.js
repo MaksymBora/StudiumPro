@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllProducts, getFilteredProducts, getProductRating } from './operations';
+import { getAllProducts, getFilteredProducts, getProductRating, addProductRating } from './operations';
 
 const initialState = {
   items: [],
   loading: false,
   error: null,
   ratingById: {},
+  ratingSubmitting: false,
+  ratingError: null,
 };
 
 const productsSlice = createSlice({
@@ -25,6 +27,18 @@ const productsSlice = createSlice({
       .addCase(getAllProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Failed to load products';
+      })
+      // ===== addProductRating =====
+      .addCase(addProductRating.pending, state => {
+        state.ratingSubmitting = true;
+        state.ratingError = null;
+      })
+      .addCase(addProductRating.fulfilled, (state, action) => {
+        state.ratingSubmitting = false;
+      })
+      .addCase(addProductRating.rejected, (state, action) => {
+        state.ratingSubmitting = false;
+        state.ratingError = action.payload || action.error.message;
       });
 
     builder

@@ -2,3 +2,6 @@ export const selectAuthToken = state => state.auth.token;
 export const selectAuthLoading = state => state.auth.loading;
 export const selectAuthError = state => state.auth.error;
 export const selectIsAuthenticated = state => state.auth.isAuthenticated;
+
+export const selectToken = state => state.auth.token;
+export const selectTokenType = state => state.auth.tokenType;
