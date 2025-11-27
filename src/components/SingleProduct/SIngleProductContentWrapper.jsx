@@ -11,6 +11,7 @@ import prod6 from '../../assets/img/product-6.png';
 import prod7 from '../../assets/img/product-7.png';
 import prod3 from '../../assets/img/product-3.png';
 import avatar from '../../assets/img/avatar.jpg';
+import { ReviewForm } from './ReviewForm';
 
 const STAR_ACTIVE = 'text-secondary';
 const STAR_INACTIVE = '';
@@ -62,11 +63,6 @@ export function SingleProductContentWrapper() {
     ));
 
   const ratingValue = product.averageRating != null ? Math.round(Number(product.averageRating)) : 0;
-
-  const handleReviewSubmit = e => {
-    e.preventDefault();
-    console.log('Submit review (TODO): productId =', product.productId);
-  };
 
   return (
     <div className="container-fluid shop py-5 bg-white">
@@ -244,52 +240,7 @@ export function SingleProductContentWrapper() {
               </div>
 
               {/* REVIEW FORM */}
-              <form onSubmit={handleReviewSubmit}>
-                <h4 className="mb-5 fw-bold">Leave a Reply</h4>
-                <div className="row g-4">
-                  <div className="col-lg-6">
-                    <div className="border-bottom rounded">
-                      <input type="text" className="form-control border-0 me-4" placeholder="Your Name *" />
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="border-bottom rounded">
-                      <input type="email" className="form-control border-0" placeholder="Your Email *" />
-                    </div>
-                  </div>
-                  <div className="col-lg-12">
-                    <div className="border-bottom rounded my-4">
-                      <textarea
-                        className="form-control border-0"
-                        cols="30"
-                        rows="8"
-                        placeholder="Your Review *"
-                        spellCheck="false"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-12">
-                    <div className="d-flex justify-content-between py-3 mb-5">
-                      <div className="d-flex align-items-center">
-                        <p className="mb-0 me-3">Please rate:</p>
-                        <div className="d-flex align-items-center" style={{ fontSize: 12 }}>
-                          <i className="fa fa-star text-muted" />
-                          <i className="fa fa-star" />
-                          <i className="fa fa-star" />
-                          <i className="fa fa-star" />
-                          <i className="fa fa-star" />
-                        </div>
-                      </div>
-                      <button
-                        type="submit"
-                        className="btn btn-primary border border-secondary text-white rounded-pill px-4 py-3"
-                      >
-                        Post Comment
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
+              <ReviewForm productId={product.productId} />
             </div>
           </div>
         </div>

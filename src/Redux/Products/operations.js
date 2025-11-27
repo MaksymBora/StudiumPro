@@ -37,3 +37,47 @@ export const getProductRating = createAsyncThunk('products/getRating', async (pr
     return thunkAPI.rejectWithValue(error.message || 'Failed to load rating');
   }
 });
+
+export const addProductRating = createAsyncThunk(
+  'products/addProductRating',
+  async ({ productId, rating, comment }, thunkAPI) => {
+    try {
+      const state = thunkAPI.getState();
+      const token = state.auth.token;
+      const tokenType = state.auth.tokenType || 'Bearer';
+
+      console.log('addProductRating -> token:', token);
+      console.log('addProductRating -> tokenType:', tokenType);
+
+      if (!token) {
+        return thunkAPI.rejectWithValue('User is not authenticated');
+      }
+
+      const url = `/api/Products/${productId}/rating`;
+
+      console.log('POST URL:', url, 'BODY:', { rating, comment });
+
+      const response = await axios.post(
+        url,
+        { rating, comment },
+        {
+          headers: {
+            Authorization: `${tokenType} ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      console.log('addProductRating -> response:', response);
+
+      thunkAPI.dispatch(getAllProducts());
+
+      return response.data;
+    } catch (error) {
+      const msg =
+        error.response?.data?.error || error.response?.data?.message || error.message || 'Failed to add rating';
+
+      return thunkAPI.rejectWithValue(msg);
+    }
+  }
+);
