@@ -10,8 +10,8 @@ import prod5 from '../../assets/img/product-5.png';
 import prod6 from '../../assets/img/product-6.png';
 import prod7 from '../../assets/img/product-7.png';
 import prod3 from '../../assets/img/product-3.png';
-import avatar from '../../assets/img/avatar.jpg';
 import { ReviewForm } from './ReviewForm';
+import { Reviews } from './Reviews';
 
 const STAR_ACTIVE = 'text-secondary';
 const STAR_INACTIVE = '';
@@ -178,64 +178,25 @@ export function SingleProductContentWrapper() {
                 </nav>
 
                 <div className="tab-content mb-5">
-                  {activeTab === 'description' && (
-                    <div className="tab-pane active">
-                      <p>
-                        Our new <b className="fw-bold">{product.name}</b> is a modern laptop from{' '}
-                        <b className="fw-bold">{product.brand}</b> with screen size {product.screenSize}".
-                      </p>
-                      <p className="small mb-0">
-                        {product.description || 'No detailed description provided for this product yet.'}
-                      </p>
-                    </div>
-                  )}
+                  {/* Description tab */}
+                  <div className={`tab-pane ${activeTab === 'description' ? 'active' : ''}`}>
+                    {activeTab === 'description' && (
+                      <>
+                        <p>
+                          Our new <b className="fw-bold">{product.name}</b> is a modern laptop from{' '}
+                          <b className="fw-bold">{product.brand}</b> with screen size {product.screenSize}".
+                        </p>
+                        <p className="small mb-0">
+                          {product.description || 'No detailed description provided for this product yet.'}
+                        </p>
+                      </>
+                    )}
+                  </div>
 
-                  {activeTab === 'reviews' && (
-                    <div className="tab-pane">
-                      {/* Dummy reviews */}
-                      <div className="d-flex mb-4">
-                        <img
-                          src={avatar}
-                          className="img-fluid rounded-circle p-3"
-                          style={{ width: '100px', height: '100px' }}
-                          alt="Reviewer avatar"
-                        />
-                        <div>
-                          <p className="mb-2" style={{ fontSize: 14 }}>
-                            April 12, 2024
-                          </p>
-                          <div className="d-flex justify-content-between">
-                            <h5>Jason Smith</h5>
-                            <div className="d-flex mb-3">{renderStars(4)}</div>
-                          </div>
-                          <p>
-                            Great laptop, does exactly what I need. Battery life is solid and performance is stable.
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="d-flex">
-                        <img
-                          src={avatar}
-                          className="img-fluid rounded-circle p-3"
-                          style={{ width: '100px', height: '100px' }}
-                          alt="Reviewer avatar"
-                        />
-                        <div>
-                          <p className="mb-2" style={{ fontSize: 14 }}>
-                            May 5, 2024
-                          </p>
-                          <div className="d-flex justify-content-between">
-                            <h5>Sam Peters</h5>
-                            <div className="d-flex mb-3">{renderStars(3)}</div>
-                          </div>
-                          <p className="text-dark">
-                            Good device overall, but I wish the fans were a bit quieter under load.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  {/* Reviews tab */}
+                  <div className={`tab-pane ${activeTab === 'reviews' ? 'active' : ''}`}>
+                    {activeTab === 'reviews' && <Reviews reviews={product.reviews || []} renderStars={renderStars} />}
+                  </div>
                 </div>
               </div>
 
