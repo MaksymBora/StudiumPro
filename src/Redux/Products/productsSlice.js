@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllProducts, getFilteredProducts, getProductRating, addProductRating } from './operations';
+import { getAllProducts, getFilteredProducts, getProductRating, addProductRating, addReviewReply } from './operations';
 
 const initialState = {
   items: [],
@@ -8,6 +8,8 @@ const initialState = {
   ratingById: {},
   ratingSubmitting: false,
   ratingError: null,
+  replySubmitting: false,
+  replyError: null,
 };
 
 const productsSlice = createSlice({
@@ -79,6 +81,19 @@ const productsSlice = createSlice({
           loading: false,
           error: action.payload || action.error.message,
         };
+      })
+
+      // ===== addReviewReply =====
+      .addCase(addReviewReply.pending, state => {
+        state.replySubmitting = true;
+        state.replyError = null;
+      })
+      .addCase(addReviewReply.fulfilled, state => {
+        state.replySubmitting = false;
+      })
+      .addCase(addReviewReply.rejected, (state, action) => {
+        state.replySubmitting = false;
+        state.replyError = action.payload || action.error.message;
       });
   },
 });
