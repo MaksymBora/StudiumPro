@@ -1,9 +1,8 @@
 // src/components/SingleProduct/Reviews.jsx
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import avatar from '../../assets/img/avatar.jpg';
-import { addReviewReply } from '../../Redux/Products/operations';
+import { ReviewReplyForm } from './ReviewReplyForm';
 import { selectIsAuthenticated } from '../../Redux/Auth/selector';
 
 function formatDate(utcString) {
@@ -19,16 +18,12 @@ function formatDate(utcString) {
 }
 
 function ReviewItem({ review, renderStars, isChild = false }) {
-  const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const { id: productId } = useParams();
-
   const [showReplyForm, setShowReplyForm] = useState(false);
-  const [replyText, setReplyText] = useState('');
 
   const hasChildren = Array.isArray(review.children) && review.children.length > 0;
 
-  const handleAnswerClick = () => {
+  const toggleReplyForm = () => {
     if (!isAuthenticated) {
       alert('To reply, you need to log in to your account.');
       return;
@@ -36,35 +31,7 @@ function ReviewItem({ review, renderStars, isChild = false }) {
     setShowReplyForm(prev => !prev);
   };
 
-  const handleReplySubmit = e => {
-    e.preventDefault();
-
-    if (!isAuthenticated) {
-      alert('To reply, you need to log in to your account.');
-      return;
-    }
-
-    if (!replyText.trim()) {
-      alert('Please enter a reply text.');
-      return;
-    }
-
-    dispatch(
-      addReviewReply({
-        productId,
-        parentReviewId: review.reviewId,
-        comment: replyText.trim(),
-      })
-    )
-      .unwrap()
-      .then(() => {
-        setReplyText('');
-        setShowReplyForm(false);
-      })
-      .catch(err => {
-        alert(err);
-      });
-  };
+  const reviewRating = Number.isFinite(review.rating) ? review.rating : null;
 
   return (
     <div className={`d-flex mb-4 ${isChild ? 'ms-5' : ''}`}>
@@ -77,12 +44,26 @@ function ReviewItem({ review, renderStars, isChild = false }) {
         }}
         alt={`${review.userName} avatar`}
       />
-      <div className={isChild ? 'small w-100' : 'w-100'}>
+      <div className={isChild ? 'small' : ''}>
         <p className="mb-1 text-muted" style={{ fontSize: isChild ? 12 : 14 }}>
           {formatDate(review.createdAtUtc)}
         </p>
+
         <div className="d-flex justify-content-between align-items-center mb-1">
           <h5 className={`mb-0 ${isChild ? 'fs-6' : ''}`}>{review.userName}</h5>
+
+          {/* ⭐ Рейтинг для parent-комментариев */}
+          {!isChild && reviewRating != null && (
+            <div className="d-flex ms-3" style={{ fontSize: 14 }}>
+              {[1, 2, 3, 4, 5].map(value => (
+                <i
+                  key={value}
+                  className={`fa fa-star ${value <= reviewRating ? 'text-danger' : 'text-muted'}`}
+                  style={{ marginLeft: 2 }}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         <p className="mb-2 text-dark">
@@ -93,32 +74,21 @@ function ReviewItem({ review, renderStars, isChild = false }) {
           )}
         </p>
 
-        <div className="mb-2">
-          <button type="button" className="btn btn-link btn-sm p-0" onClick={handleAnswerClick}>
+        {/* Кнопка Answer только для верхнего уровня */}
+        {!isChild && (
+          <button type="button" className="btn btn-link btn-sm p-0 mb-2" onClick={toggleReplyForm}>
             Answer
           </button>
-        </div>
-
-        {showReplyForm && (
-          <form onSubmit={handleReplySubmit} className="mb-3">
-            <div className="mb-2">
-              <textarea
-                className="form-control form-control-sm"
-                rows="3"
-                placeholder="Your reply *"
-                value={replyText}
-                onChange={e => setReplyText(e.target.value)}
-              />
-            </div>
-            <button
-              type="submit"
-              className="btn btn-primary btn-sm border border-secondary text-white rounded-pill px-3 py-1"
-            >
-              Send reply
-            </button>
-          </form>
         )}
 
+        {/* Форма ответа */}
+        {showReplyForm && !isChild && (
+          <div className="mt-2">
+            <ReviewReplyForm parentReviewId={review.reviewId} onSuccess={() => setShowReplyForm(false)} />
+          </div>
+        )}
+
+        {/* Дети */}
         {hasChildren && (
           <div className="mt-2">
             {review.children.map(child => (
