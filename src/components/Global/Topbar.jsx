@@ -20,7 +20,7 @@ export function TopBar() {
             {!isAuth && (
               <>
                 <Link to="/" className="text-muted me-2">
-                  Help
+                  Home
                 </Link>
                 <small>/</small>
 
@@ -29,7 +29,7 @@ export function TopBar() {
                 </Link>
                 <small>/</small>
 
-                <Link to="/contact" className="text-muted ms-2">
+                <Link to="/contacts" className="text-muted ms-2">
                   Contact
                 </Link>
               </>

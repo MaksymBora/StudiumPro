@@ -1,4 +1,5 @@
 // src/components/Carousel/Carousel.jsx
+import { Link } from 'react-router';
 import carousel1 from '../../assets/img/carousel-1.png';
 import headerImg from '../../assets/img/header-img.jpg';
 
@@ -16,11 +17,12 @@ export function Carousel() {
                 <h4 className="text-uppercase fw-bold mb-4" style={{ letterSpacing: '3px' }}>
                   Save Up To A $400
                 </h4>
-                <h1 className="display-3 text-capitalize mb-4">On Selected Laptops &amp; Desktop Or Smartphone</h1>
+                <h1 className="display-3 text-capitalize mb-4">On Selected Laptops &amp; Desktop</h1>
                 <p className="text-dark">Terms and Condition Apply</p>
-                <a className="btn btn-primary rounded-pill py-3 px-5" href="#">
-                  Shop Now
-                </a>
+
+                <Link to="/shop" className="btn btn-primary rounded-pill py-3 px-5">
+                  Home
+                </Link>
               </div>
             </div>
           </div>
