@@ -12,8 +12,8 @@ export function ProductOffer() {
               className="d-flex align-items-center justify-content-between border bg-white rounded p-4 text-decoration-none"
             >
               <div>
-                <p className="text-muted mb-3">Find The Best Camera for You!</p>
-                <h3 className="text-primary">Smart Camera</h3>
+                <p className="text-muted mb-3">Find the Best Gaming Laptops!</p>
+                <h3 className="text-primary">Gaming Laptop</h3>
                 <h1 className="display-3 text-secondary mb-0">
                   40% <span className="text-primary fw-normal">Off</span>
                 </h1>
@@ -28,8 +28,8 @@ export function ProductOffer() {
               className="d-flex align-items-center justify-content-between border bg-white rounded p-4 text-decoration-none"
             >
               <div>
-                <p className="text-muted mb-3">Find The Best Watches for You!</p>
-                <h3 className="text-primary">Smart Watch</h3>
+                <p className="text-muted mb-3">Find the Best Ultrabooks for Work!</p>
+                <h3 className="text-primary">Ultrabook</h3>
                 <h1 className="display-3 text-secondary mb-0">
                   20% <span className="text-primary fw-normal">Off</span>
                 </h1>

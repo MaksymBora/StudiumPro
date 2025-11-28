@@ -15,13 +15,13 @@ export function Carousel() {
               </div>
               <div className="col-xl-6 carousel-content p-4">
                 <h4 className="text-uppercase fw-bold mb-4" style={{ letterSpacing: '3px' }}>
-                  Save Up To A $400
+                  Save Up To A 400€
                 </h4>
                 <h1 className="display-3 text-capitalize mb-4">On Selected Laptops &amp; Desktop</h1>
                 <p className="text-dark">Terms and Condition Apply</p>
 
                 <Link to="/shop" className="btn btn-primary rounded-pill py-3 px-5">
-                  Home
+                  Shop
                 </Link>
               </div>
             </div>
@@ -37,13 +37,13 @@ export function Carousel() {
             <div className="carousel-banner">
               <div className="carousel-banner-content text-center p-4">
                 <a href="#" className="d-block mb-2">
-                  SmartPhone
+                  Laptop
                 </a>
                 <a href="#" className="d-block text-white fs-3">
-                  Apple iPad Mini <br /> G2356
+                  MSI Stealth 15M <br /> Ultra Thin
                 </a>
-                <del className="me-2 text-white fs-5">$1,250.00</del>
-                <span className="text-primary fs-5">$1,050.00</span>
+                <del className="me-2 text-white fs-5">$1,499.00</del>
+                <span className="text-primary fs-5">$1,199.00</span>
               </div>
               <a href="#" className="btn btn-primary rounded-pill py-2 px-4">
                 <i className="fas fa-shopping-cart me-2" /> Add To Cart
