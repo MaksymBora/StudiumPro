@@ -90,9 +90,7 @@ export const addReviewReply = createAsyncThunk(
       const token = state.auth.token;
       const tokenType = state.auth.tokenType || 'Bearer';
 
-      if (!token) {
-        return thunkAPI.rejectWithValue('User is not authenticated');
-      }
+      if (!token) return thunkAPI.rejectWithValue('User is not authenticated');
 
       const url = `/api/Products/${productId}/reviews/${parentReviewId}/reply`;
 
@@ -112,7 +110,7 @@ export const addReviewReply = createAsyncThunk(
       return response.data;
     } catch (error) {
       const msg =
-        error.response?.data?.error || error.response?.data?.message || error.message || 'Failed to add reply';
+        error.response?.data?.error || error.response?.data?.message || error.message || 'Failed to send reply';
 
       return thunkAPI.rejectWithValue(msg);
     }
