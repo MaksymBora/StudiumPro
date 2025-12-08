@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Pagination } from './Pagination';
 import { ProductCard } from '../ProductCard';
-import prod1 from '../../../assets/img/product-3.png';
+import prod1 from '../../../assets/img/product-3.jpg';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectProducts, selectProductsLoading, selectProductsError } from '../../../Redux/Products/selector';
 import { getAllProducts } from '../../../Redux/Products/operations';

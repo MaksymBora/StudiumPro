@@ -1,4 +1,4 @@
-import banner2 from '../../../assets/img/product-banner-2.jpg';
+import banner2 from '../../../assets/img/product-banner-2.png';
 
 export function Banner() {
   return (
