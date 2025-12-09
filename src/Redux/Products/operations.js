@@ -116,3 +116,31 @@ export const addReviewReply = createAsyncThunk(
     }
   }
 );
+
+export const createProduct = createAsyncThunk('products/create', async (product, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+    const tokenType = state.auth.tokenType || 'Bearer';
+
+    if (!token) {
+      return thunkAPI.rejectWithValue('User is not authenticated');
+    }
+
+    const { data } = await axios.post('/api/Products', product, {
+      headers: {
+        Authorization: `${tokenType} ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    thunkAPI.dispatch(getAllProducts());
+
+    return data;
+  } catch (error) {
+    const msg =
+      error.response?.data?.error || error.response?.data?.message || error.message || 'Failed to create product';
+
+    return thunkAPI.rejectWithValue(msg);
+  }
+});

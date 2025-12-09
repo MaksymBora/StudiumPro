@@ -18,16 +18,7 @@ export function Hero({ title = 'Page', crumbs = [] }) {
               className={`breadcrumb-item ${isLast ? 'active' : ''}`}
               aria-current={isLast ? 'page' : undefined}
             >
-              {/* Последняя → просто текст */}
-              {isLast ? (
-                c.label
-              ) : c.to ? (
-                /* Для Home работает линк */
-                <Link to={c.to}>{c.label}</Link>
-              ) : (
-                /* Pages → просто текст, не кликается */
-                <span>{c.label}</span>
-              )}
+              {isLast ? c.label : c.to ? <Link to={c.to}>{c.label}</Link> : <span>{c.label}</span>}
             </li>
           );
         })}
