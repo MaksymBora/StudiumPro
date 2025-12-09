@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import avatar from '../../assets/img/avatar.jpg';
 import { ReviewReplyForm } from './ReviewReplyForm';
 import { selectIsAuthenticated } from '../../Redux/Auth/selector';
+import { toast } from 'react-toastify';
 
 function formatDate(utcString) {
   if (!utcString) return '';
@@ -17,17 +18,22 @@ function formatDate(utcString) {
   });
 }
 
-function ReviewItem({ review, renderStars, isChild = false }) {
+function ReviewItem({ review, renderStars, level = 0 }) {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const [showReplyForm, setShowReplyForm] = useState(false);
 
+  const isChild = level > 0;
   const hasChildren = Array.isArray(review.children) && review.children.length > 0;
+
+  // если хочешь ограничить глубину, напр. до 3:
+  const canReply = level < 3;
 
   const toggleReplyForm = () => {
     if (!isAuthenticated) {
-      alert('To reply, you need to log in to your account.');
+      toast.info('To reply, you need to log in to your account.');
       return;
     }
+    if (!canReply) return;
     setShowReplyForm(prev => !prev);
   };
 
@@ -52,8 +58,8 @@ function ReviewItem({ review, renderStars, isChild = false }) {
         <div className="d-flex justify-content-between align-items-center mb-1">
           <h5 className={`mb-0 ${isChild ? 'fs-6' : ''}`}>{review.userName}</h5>
 
-          {/* ⭐ Рейтинг для parent-комментариев */}
-          {!isChild && reviewRating != null && (
+          {/* рейтинг только для "root" отзывов, как и было */}
+          {level === 0 && reviewRating != null && (
             <div className="d-flex ms-3" style={{ fontSize: 14 }}>
               {[1, 2, 3, 4, 5].map(value => (
                 <i
@@ -74,15 +80,15 @@ function ReviewItem({ review, renderStars, isChild = false }) {
           )}
         </p>
 
-        {/* Кнопка Answer только для верхнего уровня */}
-        {!isChild && (
+        {/* Кнопка Answer теперь есть на всех уровнях (до maxDepth) */}
+        {canReply && (
           <button type="button" className="btn btn-link btn-sm p-0 mb-2" onClick={toggleReplyForm}>
             Answer
           </button>
         )}
 
-        {/* Форма ответа */}
-        {showReplyForm && !isChild && (
+        {/* Форма ответа тоже для всех уровней */}
+        {showReplyForm && canReply && (
           <div className="mt-2">
             <ReviewReplyForm parentReviewId={review.reviewId} onSuccess={() => setShowReplyForm(false)} />
           </div>
@@ -92,7 +98,7 @@ function ReviewItem({ review, renderStars, isChild = false }) {
         {hasChildren && (
           <div className="mt-2">
             {review.children.map(child => (
-              <ReviewItem key={child.reviewId} review={child} renderStars={renderStars} isChild={true} />
+              <ReviewItem key={child.reviewId} review={child} renderStars={renderStars} level={level + 1} />
             ))}
           </div>
         )}
@@ -109,7 +115,7 @@ export function Reviews({ reviews, renderStars }) {
   return (
     <>
       {reviews.map(review => (
-        <ReviewItem key={review.reviewId} review={review} renderStars={renderStars} isChild={false} />
+        <ReviewItem key={review.reviewId} review={review} renderStars={renderStars} level={0} />
       ))}
     </>
   );
