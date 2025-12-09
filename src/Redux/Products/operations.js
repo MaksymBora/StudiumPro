@@ -14,12 +14,13 @@ export const getAllProducts = createAsyncThunk('products/getAll', async (_, thun
 
 export const getFilteredProducts = createAsyncThunk('products/getFiltered', async (filters, thunkAPI) => {
   try {
-    const response = await axios.get('/api/products/filter', {
+    const response = await axios.get('/api/Products/filter', {
       params: {
         brand: filters?.brand ?? null,
         minPrice: filters?.minPrice ?? null,
         maxPrice: filters?.maxPrice ?? null,
         minRamGb: filters?.minRamGb ?? null,
+        sort: filters?.sort ?? null,
       },
     });
     return response.data;
