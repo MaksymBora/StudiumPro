@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Pagination } from './Pagination';
 import { ProductCard } from '../ProductCard';
 import prod1 from '../../../assets/img/product-3.jpg';

@@ -5,7 +5,7 @@ export function Pagination({ total = 6, onChange }) {
 
   const handleClick = num => {
     setPage(num);
-    onChange?.(num); // если родитель передал callback
+    onChange?.(num);
   };
 
   const prevPage = () => {
@@ -19,12 +19,10 @@ export function Pagination({ total = 6, onChange }) {
   return (
     <div className="col-12 wow fadeInUp" data-wow-delay="0.1s">
       <div className="pagination d-flex justify-content-center mt-5 flex-wrap gap-2">
-        {/* Кнопка «Назад» */}
         <button className="btn btn-light border-0 rounded px-3" onClick={prevPage} disabled={page === 1}>
           &laquo;
         </button>
 
-        {/* Номера страниц */}
         {Array.from({ length: total }, (_, i) => i + 1).map(num => (
           <button
             key={num}
@@ -37,7 +35,6 @@ export function Pagination({ total = 6, onChange }) {
           </button>
         ))}
 
-        {/* Кнопка «Вперёд» */}
         <button className="btn btn-light border-0 rounded px-3" onClick={nextPage} disabled={page === total}>
           &raquo;
         </button>
