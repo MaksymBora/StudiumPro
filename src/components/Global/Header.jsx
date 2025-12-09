@@ -1,12 +1,50 @@
-// src/components/Global/Header.jsx
 import { Link, useLocation } from 'react-router-dom';
 import { Hero } from './Hero';
+import { useSelector } from 'react-redux';
+import { selectIsAuthenticated } from '../../Redux/Auth/selector';
 
 export function Header() {
   const location = useLocation();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
-  // Показываем hero только на /contacts
-  const showContactHero = location.pathname === '/contacts';
+  const heroConfig = (() => {
+    const path = location.pathname;
+
+    switch (path) {
+      case '/':
+        return {
+          title: 'Welcome to LapTop Store',
+          crumbs: [{ label: 'Home', active: true }],
+        };
+
+      case '/shop':
+        return {
+          title: 'Our Products',
+          crumbs: [
+            { label: 'Home', to: '/' },
+            { label: 'Shop', active: true },
+          ],
+        };
+
+      case '/contacts':
+        return {
+          title: 'Contact Us',
+          crumbs: [{ label: 'Home', to: '/' }, { label: 'Pages' }, { label: 'Contact', active: true }],
+        };
+
+      case '/account':
+        return {
+          title: 'My Account – Add Laptop',
+          crumbs: [
+            { label: 'Home', to: '/' },
+            { label: 'My Account', active: true },
+          ],
+        };
+
+      default:
+        return null;
+    }
+  })();
 
   return (
     <>
@@ -93,6 +131,11 @@ export function Header() {
                   <Link to="/contacts" className="nav-item nav-link me-2">
                     Contact
                   </Link>
+                  {isAuthenticated && (
+                    <Link to="/account" className="nav-item nav-link me-2">
+                      My Account
+                    </Link>
+                  )}
 
                   {/* All Category for mobile */}
                   <div className="nav-item dropdown d-block d-lg-none mb-3">
@@ -150,9 +193,7 @@ export function Header() {
         </div>
       </div>
 
-      {showContactHero && (
-        <Hero title="Contact Us" crumbs={[{ label: 'Home', to: '/' }, { label: 'Pages' }, { label: 'Contact' }]} />
-      )}
+      {heroConfig && <Hero title={heroConfig.title} crumbs={heroConfig.crumbs} />}
     </>
   );
 }

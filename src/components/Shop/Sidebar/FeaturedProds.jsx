@@ -1,12 +1,12 @@
-import prod3 from '../../../assets/img/product-3.png';
-import prod4 from '../../../assets/img/product-4.png';
-import prod5 from '../../../assets/img/product-5.png';
+import prod3 from '../../../assets/img/product-3.jpg';
+import prod4 from '../../../assets/img/product-4.jpg';
+import prod5 from '../../../assets/img/product-5.jpg';
 
 export function FeaturedProds() {
   const featuredProducts = [
-    { img: prod3, title: 'SmartPhone', price: '2.99 $', oldPrice: '4.11 $', rating: 4 },
-    { img: prod4, title: 'Smart Camera', price: '2.99 $', oldPrice: '4.11 $', rating: 5 },
-    { img: prod5, title: 'Camera Lens', price: '2.99 $', oldPrice: '4.11 $', rating: 3 },
+    { img: prod3, title: 'Lenovo IdeaPad 5', price: '899 €', oldPrice: '999 €', rating: 4 },
+    { img: prod4, title: 'HP Pavilion 15', price: '749 €', oldPrice: '899 €', rating: 5 },
+    { img: prod5, title: 'ASUS VivoBook S14', price: '679 €', oldPrice: '799 €', rating: 3 },
   ];
 
   const maxStars = 5;

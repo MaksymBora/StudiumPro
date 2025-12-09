@@ -10,17 +10,46 @@ import { Layout } from './components/Global/Layout.jsx';
 import { Login } from './pages/Login.jsx';
 import { SignIn } from './pages/SignIn.jsx';
 import { Product } from './pages/Product.jsx';
+import { Account } from './pages/Account.jsx';
+import { ProtectedRoute } from './ProtectedRoute';
+import { PublicRoute } from './PublicRoute';
 
 export function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<Home />}></Route>
-        <Route path="login" element={<Login />} />
-        <Route path="signin" element={<SignIn />} />
+        <Route index element={<Home />} />
+
+        <Route
+          path="login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="signin"
+          element={
+            <PublicRoute>
+              <SignIn />
+            </PublicRoute>
+          }
+        />
+
         <Route path="contacts" element={<Contact />} />
         <Route path="shop" element={<Shop />} />
         <Route path="product/:id" element={<Product />} />
+
+        <Route
+          path="account"
+          element={
+            <ProtectedRoute>
+              <Account />
+            </ProtectedRoute>
+          }
+        />
       </Route>
     </Routes>
   );

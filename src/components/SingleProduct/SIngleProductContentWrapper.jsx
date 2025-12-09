@@ -5,11 +5,11 @@ import { Sidebar } from '../Shop/Sidebar/Sidebar';
 import { selectProducts, selectProductsLoading, selectProductsError } from '../../Redux/Products/selector';
 import { getAllProducts } from '../../Redux/Products/operations';
 
-import prod4 from '../../assets/img/product-4.png';
-import prod5 from '../../assets/img/product-5.png';
-import prod6 from '../../assets/img/product-6.png';
-import prod7 from '../../assets/img/product-7.png';
-import prod3 from '../../assets/img/product-3.png';
+import prod4 from '../../assets/img/product-4.jpg';
+import prod5 from '../../assets/img/product-5.jpg';
+import prod6 from '../../assets/img/product-6.jpg';
+import prod7 from '../../assets/img/product-7.jpg';
+import prod3 from '../../assets/img/product-3.jpg';
 import { ReviewForm } from './ReviewForm';
 import { Reviews } from './Reviews';
 
