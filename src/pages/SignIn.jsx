@@ -35,13 +35,17 @@ export function SignIn() {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={async (values, actions) => {
-              const result = await dispatch(registerUser(values));
+              try {
+                await dispatch(registerUser(values)).unwrap();
 
-              if (registerUser.fulfilled.match(result)) {
+                toast.success('Account created. You are now logged in.');
+                actions.resetForm();
                 navigate('/');
+              } catch (errorMessage) {
+                toast.error(errorMessage || 'Registration failed.');
+              } finally {
+                actions.setSubmitting(false);
               }
-
-              actions.setSubmitting(false);
             }}
           >
             {({ isSubmitting }) => (

@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { createProduct } from '../Redux/Products/operations';
 import { selectIsAuthenticated } from '../Redux/Auth/selector';
+import { toast } from 'react-toastify';
 
 const PROCESSOR_OPTIONS = [
   'Intel Core i5-1240P',
@@ -78,7 +79,6 @@ const FEATURES_OPTIONS = [
   'Dolby Atmos speakers',
 ];
 
-// ----- схема валидации -----
 const validationSchema = Yup.object({
   name: Yup.string().required('Required'),
   price: Yup.number().typeError('Must be a number').positive().required('Required'),
@@ -109,7 +109,6 @@ const validationSchema = Yup.object({
   }),
 });
 
-// helper: преобразуем строки в числа где надо
 const toNumber = v => (v === '' || v === null || v === undefined ? null : Number(v));
 
 export function Account() {
@@ -184,11 +183,11 @@ export function Account() {
     dispatch(createProduct(payload))
       .unwrap()
       .then(() => {
-        alert('Product has been created successfully.');
+        toast.success('Product has been created successfully.');
         actions.resetForm();
       })
       .catch(err => {
-        alert(err);
+        toast.error(ErrorMessage || 'Failed to create product.');
       })
       .finally(() => {
         actions.setSubmitting(false);
@@ -203,7 +202,6 @@ export function Account() {
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
           {({ isSubmitting }) => (
             <Form className="p-4 border rounded bg-light shadow-sm">
-              {/* Основная инфа о товаре */}
               <h4 className="mb-3">Basic Information</h4>
 
               <div className="row g-3 mb-4">
@@ -238,7 +236,6 @@ export function Account() {
                 </div>
               </div>
 
-              {/* Specs – всё через select'ы */}
               <h4 className="mb-3">Specifications</h4>
 
               <div className="row g-3">

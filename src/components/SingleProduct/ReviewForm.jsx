@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { addProductRating } from '../../Redux/Products/operations';
 import { selectIsAuthenticated } from '../../Redux/Auth/selector';
+import { toast } from 'react-toastify';
 
 export function ReviewForm() {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ export function ReviewForm() {
 
   const handleStarClick = value => {
     if (!isAuthenticated) {
-      alert('To give a rating, you need to log into your account.');
+      toast.info('To give a rating, you need to log into your account.');
       return;
     }
     setSelectedRating(value);
@@ -27,17 +28,17 @@ export function ReviewForm() {
     e.preventDefault();
 
     if (!isAuthenticated) {
-      alert('To submit a rating, you need to log in to your account.');
+      toast.info('To submit a rating, you need to log in to your account.');
       return;
     }
 
     if (!selectedRating) {
-      alert('Please select a rating from 1 to 5.');
+      toast.warning('Please select a rating from 1 to 5.');
       return;
     }
 
     if (!comment.trim()) {
-      alert('Please write a review comment.');
+      toast.warning('Please write a review comment.');
       return;
     }
 
@@ -50,13 +51,13 @@ export function ReviewForm() {
     )
       .unwrap()
       .then(() => {
-        alert('Thank you! Your rating and comment have been saved.');
+        toast.success('Thank you! Your rating and comment have been saved.');
         setSelectedRating(0);
         setHoverRating(0);
         setComment('');
       })
       .catch(errorMessage => {
-        alert(errorMessage);
+        toast.error(errorMessage);
       });
   };
 

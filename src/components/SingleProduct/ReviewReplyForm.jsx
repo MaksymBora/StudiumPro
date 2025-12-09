@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { addReviewReply } from '../../Redux/Products/operations';
 import { selectIsAuthenticated } from '../../Redux/Auth/selector';
+import { toast } from 'react-toastify';
 
 export function ReviewReplyForm({ parentReviewId, onSuccess }) {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ export function ReviewReplyForm({ parentReviewId, onSuccess }) {
     e.preventDefault();
 
     if (!isAuthenticated) {
-      alert('To reply, you need to log into your account.');
+      toast.info('To reply, you need to log in to your account.');
       return;
     }
 
@@ -28,22 +29,15 @@ export function ReviewReplyForm({ parentReviewId, onSuccess }) {
 
     setLoading(true);
 
-    dispatch(
-      addReviewReply({
-        productId,
-        parentReviewId,
-        comment: text.trim(),
-      })
-    )
+    dispatch(addReviewReply({ productId, parentReviewId, comment: text.trim() }))
       .unwrap()
       .then(() => {
+        toast.success('Your reply has been posted.');
         setText('');
-        setLoading(false);
-        if (onSuccess) onSuccess();
+        setIsOpen(false);
       })
-      .catch(err => {
-        alert(err);
-        setLoading(false);
+      .catch(errorMessage => {
+        toast.error(errorMessage);
       });
   };
 
