@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
 import { Advantages } from '../components/Shop/Advantages';
 import { loginUser } from '../Redux/Auth/operations';
 import { selectAuthLoading, selectAuthError } from '../Redux/Auth/selector';
@@ -29,11 +29,11 @@ export function Login() {
     try {
       await dispatch(loginUser(values)).unwrap();
 
+      toast.success('Welcome back!');
       actions.resetForm();
-
       navigate('/');
-    } catch (err) {
-      console.error('LOGIN ERROR:', err);
+    } catch (errorMessage) {
+      toast.error(errorMessage || 'Login failed.');
     } finally {
       actions.setSubmitting(false);
     }

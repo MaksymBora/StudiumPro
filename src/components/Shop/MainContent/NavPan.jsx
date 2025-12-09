@@ -61,22 +61,6 @@ export function NavPan() {
           </select>
         </div>
       </div>
-
-      {/* View changer */}
-      {/* <div className="col-lg-4 col-xl-2">
-        <ul className="nav nav-pills d-inline-flex text-center py-2 px-2 rounded bg-light mb-4">
-          <li className="nav-item me-4">
-            <a className="bg-light" data-bs-toggle="pill" href="#tab-5">
-              <i className="fas fa-th fa-3x text-primary"></i>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="bg-light" data-bs-toggle="pill" href="#tab-6">
-              <i className="fas fa-bars fa-3x text-primary"></i>
-            </a>
-          </li>
-        </ul>
-      </div> */}
     </div>
   );
 }
