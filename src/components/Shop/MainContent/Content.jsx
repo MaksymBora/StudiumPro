@@ -25,7 +25,6 @@ export function Content() {
   }
 
   const products = items || [];
-  console.log('Products from API:', products);
 
   return (
     <div className="tab-content">

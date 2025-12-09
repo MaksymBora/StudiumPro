@@ -47,16 +47,11 @@ export const addProductRating = createAsyncThunk(
       const token = state.auth.token;
       const tokenType = state.auth.tokenType || 'Bearer';
 
-      console.log('addProductRating -> token:', token);
-      console.log('addProductRating -> tokenType:', tokenType);
-
       if (!token) {
         return thunkAPI.rejectWithValue('User is not authenticated');
       }
 
       const url = `/api/Products/${productId}/rating`;
-
-      console.log('POST URL:', url, 'BODY:', { rating, comment });
 
       const response = await axios.post(
         url,
@@ -68,8 +63,6 @@ export const addProductRating = createAsyncThunk(
           },
         }
       );
-
-      console.log('addProductRating -> response:', response);
 
       thunkAPI.dispatch(getAllProducts());
 

@@ -1,7 +1,7 @@
 import { Advantages } from '../components/Shop/Advantages';
 import { ProductOffer } from '../components/Shop/ProductOffer';
 import { TopSaleBanners } from '../components/Shop/TopSaleBanners';
-import { SingleProductContentWrapper } from '../components/SingleProduct/SIngleProductContentWrapper';
+import { SingleProductContentWrapper } from '../components/Product/SIngleProductContentWrapper';
 
 export function Product() {
   return (
