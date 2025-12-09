@@ -25,7 +25,6 @@ function ReviewItem({ review, renderStars, level = 0 }) {
   const isChild = level > 0;
   const hasChildren = Array.isArray(review.children) && review.children.length > 0;
 
-  // если хочешь ограничить глубину, напр. до 3:
   const canReply = level < 3;
 
   const toggleReplyForm = () => {
@@ -58,7 +57,6 @@ function ReviewItem({ review, renderStars, level = 0 }) {
         <div className="d-flex justify-content-between align-items-center mb-1">
           <h5 className={`mb-0 ${isChild ? 'fs-6' : ''}`}>{review.userName}</h5>
 
-          {/* рейтинг только для "root" отзывов, как и было */}
           {level === 0 && reviewRating != null && (
             <div className="d-flex ms-3" style={{ fontSize: 14 }}>
               {[1, 2, 3, 4, 5].map(value => (
@@ -80,21 +78,18 @@ function ReviewItem({ review, renderStars, level = 0 }) {
           )}
         </p>
 
-        {/* Кнопка Answer теперь есть на всех уровнях (до maxDepth) */}
         {canReply && (
           <button type="button" className="btn btn-link btn-sm p-0 mb-2" onClick={toggleReplyForm}>
             Answer
           </button>
         )}
 
-        {/* Форма ответа тоже для всех уровней */}
         {showReplyForm && canReply && (
           <div className="mt-2">
             <ReviewReplyForm parentReviewId={review.reviewId} onSuccess={() => setShowReplyForm(false)} />
           </div>
         )}
 
-        {/* Дети */}
         {hasChildren && (
           <div className="mt-2">
             {review.children.map(child => (
