@@ -1,36 +1,52 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts, getFilteredProducts } from '../../../Redux/Products/operations';
+import { selectProductsFilter } from '../../../Redux/Products/selector';
 
 export function NavPan() {
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
-  const [sort, setSort] = useState('default');
 
-  const handleChange = e => setSearch(e.target.value);
+  const { brand, sort } = useSelector(selectProductsFilter);
+
+  const handleChange = e => {
+    setSearch(e.target.value);
+  };
 
   const handleSearch = e => {
     e.preventDefault();
-    const term = search.trim();
 
+    const term = search.trim();
     if (!term) {
-      dispatch(getAllProducts());
+      dispatch(getAllProducts({ page: 1, pageSize: 12 }));
       return;
     }
 
-    dispatch(getFilteredProducts({ brand: term }));
+    dispatch(getFilteredProducts({ brand: term, sort: null, page: 1, pageSize: 12 }));
   };
 
   const handleSortChange = e => {
     const value = e.target.value;
-    setSort(value);
 
-    if (value === 'default') {
-      dispatch(getAllProducts());
+    let sortParam = null;
+    if (value === 'price_asc') sortParam = 'price_asc';
+    if (value === 'price_desc') sortParam = 'price_desc';
+
+    const currentBrand = search.trim() || brand || '';
+
+    if (!currentBrand && !sortParam) {
+      dispatch(getAllProducts({ page: 1, pageSize: 12 }));
       return;
     }
 
-    dispatch(getFilteredProducts({ sort: value }));
+    dispatch(
+      getFilteredProducts({
+        brand: currentBrand,
+        sort: sortParam,
+        page: 1,
+        pageSize: 12,
+      })
+    );
   };
 
   return (
@@ -43,11 +59,12 @@ export function NavPan() {
               type="search"
               className="form-control p-3"
               placeholder="Brand (e.g. Dell, Asus)"
+              aria-describedby="search-icon-1"
               value={search}
               onChange={handleChange}
             />
             <button id="search-icon-1" className="input-group-text p-3" type="submit" aria-label="Search by brand">
-              <i className="fa fa-search" />
+              <i className="fa fa-search"></i>
             </button>
           </form>
         </div>
@@ -56,19 +73,19 @@ export function NavPan() {
       {/* Sort */}
       <div className="col-xl-3 text-end">
         <div className="bg-light ps-3 py-3 rounded d-flex justify-content-between align-items-center">
-          <label htmlFor="sort-select" className="me-2 mb-0">
+          <label htmlFor="electronics" className="me-2 mb-0">
             Sort By:
           </label>
           <select
-            id="sort-select"
+            id="electronics"
+            name="electronicslist"
             className="border-0 form-select-sm bg-light me-3"
-            value={sort}
+            defaultValue=""
             onChange={handleSortChange}
           >
-            <option value="default">Default sorting</option>
-
-            <option value="rating_desc">Top rated</option>
-            <option value="rating_asc">Lowest rated</option>
+            <option value="">Default Sorting</option>
+            <option value="price_asc">Price: low to high</option>
+            <option value="price_desc">Price: high to low</option>
           </select>
         </div>
       </div>

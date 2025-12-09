@@ -3,17 +3,29 @@ import { Pagination } from './Pagination';
 import { ProductCard } from '../ProductCard';
 import prod1 from '../../../assets/img/product-3.jpg';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectProducts, selectProductsLoading, selectProductsError } from '../../../Redux/Products/selector';
-import { getAllProducts } from '../../../Redux/Products/operations';
+import {
+  selectProducts,
+  selectProductsLoading,
+  selectProductsError,
+  selectProductsPage,
+  selectProductsTotalPages,
+  selectProductsFilter,
+} from '../../../Redux/Products/selector';
+import { getAllProducts, getFilteredProducts } from '../../../Redux/Products/operations';
 
 export function Content() {
   const dispatch = useDispatch();
+
   const items = useSelector(selectProducts);
   const loading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
 
+  const page = useSelector(selectProductsPage);
+  const totalPages = useSelector(selectProductsTotalPages);
+  const { brand, sort } = useSelector(selectProductsFilter);
+
   useEffect(() => {
-    dispatch(getAllProducts());
+    dispatch(getAllProducts({ page: 1, pageSize: 12 }));
   }, [dispatch]);
 
   if (loading) {
@@ -25,6 +37,14 @@ export function Content() {
   }
 
   const products = items || [];
+
+  const handlePageChange = newPage => {
+    if (brand || sort) {
+      dispatch(getFilteredProducts({ brand, sort, page: newPage, pageSize: 12 }));
+    } else {
+      dispatch(getAllProducts({ page: newPage, pageSize: 12 }));
+    }
+  };
 
   return (
     <div className="tab-content">
@@ -49,7 +69,7 @@ export function Content() {
             );
           })}
 
-          <Pagination total={5} onChange={page => console.log('current page:', page)} />
+          <Pagination current={page} total={totalPages} onChange={handlePageChange} />
         </div>
       </div>
     </div>

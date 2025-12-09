@@ -1,33 +1,46 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = 'https://localhost:7086';
+axios.defaults.baseURL = 'https://localhost:7086/api/products';
 
-export const getAllProducts = createAsyncThunk('products/getAll', async (_, thunkAPI) => {
-  try {
-    const { data } = await axios.get('/api/products');
-    return data;
-  } catch (err) {
-    return thunkAPI.rejectWithValue(err?.response?.data || err.message);
-  }
-});
+export const getAllProducts = createAsyncThunk(
+  'products/getAll',
+  async ({ page = 1, pageSize = 12 } = {}, thunkAPI) => {
+    try {
+      const res = await axios.get('/api/products', {
+        params: { page, pageSize },
+      });
 
-export const getFilteredProducts = createAsyncThunk('products/getFiltered', async (filters, thunkAPI) => {
-  try {
-    const response = await axios.get('/api/Products/filter', {
-      params: {
-        brand: filters?.brand ?? null,
-        minPrice: filters?.minPrice ?? null,
-        maxPrice: filters?.maxPrice ?? null,
-        minRamGb: filters?.minRamGb ?? null,
-        sort: filters?.sort ?? null,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data || err.message);
+    }
   }
-});
+);
+
+export const getFilteredProducts = createAsyncThunk(
+  'products/getFiltered',
+  async ({ brand, sort, page = 1, pageSize = 12 }, thunkAPI) => {
+    try {
+      const res = await axios.get('/api/products/filter', {
+        params: {
+          brand,
+          sort,
+          page,
+          pageSize,
+        },
+      });
+
+      return {
+        ...res.data,
+        brand,
+        sort: sort || null,
+      };
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
 
 export const getProductRating = createAsyncThunk('products/getRating', async (productId, thunkAPI) => {
   try {
