@@ -1,4 +1,3 @@
-// src/components/SingleProduct/Reviews.jsx
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import avatar from '../../assets/img/avatar.jpg';
