@@ -29,8 +29,8 @@ export function NavPan() {
     const value = e.target.value;
 
     let sortParam = null;
-    if (value === 'price_asc') sortParam = 'price_asc';
-    if (value === 'price_desc') sortParam = 'price_desc';
+    if (value === 'rating_asc') sortParam = 'rating_asc';
+    if (value === 'rating_desc') sortParam = 'rating_desc';
 
     const currentBrand = search.trim() || brand || '';
 
@@ -71,7 +71,7 @@ export function NavPan() {
       </div>
 
       {/* Sort */}
-      <div className="col-xl-3 text-end">
+      <div className="col-xl-5 text-end">
         <div className="bg-light ps-3 py-3 rounded d-flex justify-content-between align-items-center">
           <label htmlFor="electronics" className="me-2 mb-0">
             Sort By:
@@ -84,8 +84,8 @@ export function NavPan() {
             onChange={handleSortChange}
           >
             <option value="">Default Sorting</option>
-            <option value="price_asc">Price: low to high</option>
-            <option value="price_desc">Price: high to low</option>
+            <option value="rating_asc">Rating: low to high</option>
+            <option value="rating_desc">Rating: high to low</option>
           </select>
         </div>
       </div>
