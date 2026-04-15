@@ -16,17 +16,17 @@ export function ProductTabs({ product, activeTab, setActiveTab }) {
   return (
     <div className="col-lg-12">
       <nav>
-        <div className="nav nav-tabs mb-3">
+        <div className="nav nav-tabs mb-3 product-tabs-nav">
           <button
             type="button"
-            className={`nav-link border-white border-bottom-0 ${activeTab === 'description' ? 'active' : ''}`}
+            className={`nav-link border-white ${activeTab === 'description' ? 'active' : ''}`}
             onClick={() => setActiveTab('description')}
           >
             Description
           </button>
           <button
             type="button"
-            className={`nav-link border-white border-bottom-0 ${activeTab === 'reviews' ? 'active' : ''}`}
+            className={`nav-link border-white ${activeTab === 'reviews' ? 'active' : ''}`}
             onClick={() => setActiveTab('reviews')}
           >
             Reviews

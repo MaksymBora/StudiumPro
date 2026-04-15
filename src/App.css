@@ -65,3 +65,13 @@
   color: white;
   text-decoration: none;
 }
+
+.product-tabs-nav .nav-link {
+  border-bottom: 2px solid transparent !important;
+}
+
+.product-tabs-nav .nav-link.active {
+  border-bottom-color: #f28b00 !important;
+  color: #f28b00 !important;
+  font-weight: 600;
+}
