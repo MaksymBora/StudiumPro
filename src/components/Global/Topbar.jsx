@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectIsAuthenticated } from '../../Redux/Auth/selector';
 import { logout } from '../../Redux/Auth/authSlice';
+import { logoutUser } from '../../Redux/Auth/operations';
 
 export function TopBar() {
   const isAuth = useSelector(selectIsAuthenticated);
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await dispatch(logoutUser());
     dispatch(logout());
   };
 

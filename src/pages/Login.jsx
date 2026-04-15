@@ -1,16 +1,18 @@
 // src/pages/Login.jsx
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Advantages } from '../components/Shop/Advantages';
-import { loginUser } from '../Redux/Auth/operations';
+import { loginUser, loginWithGoogle } from '../Redux/Auth/operations';
 import { selectAuthLoading, selectAuthError } from '../Redux/Auth/selector';
 
 export function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
 
   const loading = useSelector(selectAuthLoading);
   const authError = useSelector(selectAuthError);
@@ -36,6 +38,19 @@ export function Login() {
       toast.error(errorMessage || 'Login failed.');
     } finally {
       actions.setSubmitting(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setIsGoogleSubmitting(true);
+    try {
+      await dispatch(loginWithGoogle()).unwrap();
+      toast.success('Logged in with Google!');
+      navigate('/');
+    } catch (errorMessage) {
+      toast.error(errorMessage || 'Google login failed.');
+    } finally {
+      setIsGoogleSubmitting(false);
     }
   };
 
@@ -68,6 +83,41 @@ export function Login() {
                   disabled={isSubmitting || loading}
                 >
                   {isSubmitting || loading ? 'Logging in…' : 'Login'}
+                </button>
+
+                <button
+                  className="btn w-100 mt-3 d-flex align-items-center justify-content-center gap-2 fw-semibold google-login-btn"
+                  type="button"
+                  onClick={handleGoogleLogin}
+                  disabled={isSubmitting || loading || isGoogleSubmitting}
+                  style={{
+                    backgroundColor: '#fff',
+                    color: '#3c4043',
+                    border: '1px solid #dadce0',
+                    borderRadius: '8px',
+                    padding: '0.8rem 1rem',
+                    boxShadow: '0 1px 2px rgba(60, 64, 67, 0.1)',
+                  }}
+                >
+                  <span
+                    className="d-inline-flex align-items-center justify-content-center"
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                      borderRadius: '50%',
+                      backgroundColor: '#fff',
+                    }}
+                  >
+                    <i className="fab fa-google" aria-hidden="true" style={{ color: '#ea4335' }} />
+                  </span>
+                  {isGoogleSubmitting ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
+                      Signing in...
+                    </>
+                  ) : (
+                    'Continue with Google'
+                  )}
                 </button>
               </Form>
             )}

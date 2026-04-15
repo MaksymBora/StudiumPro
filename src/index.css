@@ -66,3 +66,18 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.google-login-btn {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.google-login-btn:hover {
+  border-color: #c6c8cc !important;
+  box-shadow: 0 3px 8px rgba(60, 64, 67, 0.25) !important;
+  transform: translateY(-1px);
+}
+
+.google-login-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.2) !important;
+}

@@ -4,6 +4,7 @@ import { Advantages } from '../components/Shop/Advantages';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../Redux/Auth/operations';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export function SignIn() {
   const dispatch = useDispatch();
