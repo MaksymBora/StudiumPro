@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginUser, registerUser } from './operations';
+import { loginUser, loginWithGoogle, logoutUser, registerUser } from './operations';
 
 const initialState = {
   token: null,
@@ -41,6 +41,23 @@ const authSlice = createSlice({
         state.error = action.payload || 'Login failed';
       });
 
+    // GOOGLE LOGIN
+    builder
+      .addCase(loginWithGoogle.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        state.loading = false;
+        state.token = action.payload.accessToken;
+        state.tokenType = action.payload.tokenType;
+        state.isAuthenticated = true;
+      })
+      .addCase(loginWithGoogle.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Google login failed';
+      });
+
     // REGISTER
     builder
       .addCase(registerUser.pending, state => {
@@ -55,6 +72,17 @@ const authSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Registration failed';
+      })
+      .addCase(logoutUser.fulfilled, state => {
+        state.token = null;
+        state.tokenType = null;
+        state.isAuthenticated = false;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Logout failed';
       });
   },
 });
